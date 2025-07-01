@@ -1,0 +1,6 @@
+{
+  "name": "Prompt Enhancer Pro",
+  "description": "A professional tool to enhance and detail prompts for various AI models using Gemini. Select your target AI, customize parameters, and let Gemini craft the perfect prompt for you.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
