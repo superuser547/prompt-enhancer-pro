@@ -10,13 +10,13 @@ export class GeminiService {
 
   private constructor(translateFunction: TranslateFunction) {
     this.t = translateFunction;
-    if (!process.env.API_KEY) {
-      console.error("API_KEY environment variable is not set.");
+    if (!process.env.GEMINI_API_KEY) {
+      console.error("GEMINI_API_KEY environment variable is not set.");
       // This error is critical and happens before t might be fully available,
       // so a hardcoded English message is acceptable here or a very basic t call.
-      throw new Error(this.t('error.api.ensureKey', {message: "API_KEY environment variable is not set"}));
+      throw new Error(this.t('error.api.ensureKey', {message: "GEMINI_API_KEY environment variable is not set"}));
     }
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    this.ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   }
 
   public static getInstance(translateFunction: TranslateFunction): GeminiService {
