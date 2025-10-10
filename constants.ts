@@ -40,7 +40,7 @@ export const COLOR_PALETTES: string[] = [
   'Warm Colors', 'Cool Colors', 'Analogous Colors', 'Complementary Colors', 'Triadic Colors', 'Neon'
 ];
 
-export const GEMINI_MODEL_NAME = 'gemini-2.5-flash-preview-04-17';
+export const GEMINI_MODEL_NAME = 'gemini-2.5-flash';
 
 export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: 'en', name: 'English' },
