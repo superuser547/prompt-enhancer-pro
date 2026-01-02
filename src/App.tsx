@@ -1,6 +1,5 @@
-
 import React, { useState, useCallback, useMemo } from 'react';
-import { EnhancementParams, AiModelOption } from './core/types';
+import { EnhancementParams } from './core/types';
 import {
   AI_MODELS,
   GEMINI_MODEL_NAME,
@@ -24,10 +23,13 @@ const App: React.FC = () => {
   const [uiLanguage, setUiLanguage] = useState<string>(DEFAULT_UI_LANGUAGE);
   const [promptLanguage, setPromptLanguage] = useState<string>(DEFAULT_PROMPT_LANGUAGE);
 
-  const t: TranslateFunction = useCallback((key, replacements) => {
-    return translate(uiLanguage, key, replacements);
-  }, [uiLanguage]);
-  
+  const t: TranslateFunction = useCallback(
+    (key, replacements) => {
+      return translate(uiLanguage, key, replacements);
+    },
+    [uiLanguage],
+  );
+
   const [enhancementParams, setEnhancementParams] = useState<EnhancementParams>({
     initialPrompt: '',
     targetAiModel: AI_MODELS[0].value,
@@ -40,7 +42,7 @@ const App: React.FC = () => {
     lighting: 'Default',
     colorPalette: 'Default',
     specificInstructions: '',
-    promptLanguage: promptLanguage, 
+    promptLanguage: promptLanguage,
   });
 
   const [enhancedPrompt, setEnhancedPrompt] = useState<string>('');
@@ -64,7 +66,9 @@ const App: React.FC = () => {
     setEnhancementParams(prev => ({ ...prev, promptLanguage: langCode }));
   }, []);
 
-  const selectedAiModelDetails = AI_MODELS.find(model => model.value === enhancementParams.targetAiModel);
+  const selectedAiModelDetails = AI_MODELS.find(
+    model => model.value === enhancementParams.targetAiModel,
+  );
 
   const handleSubmit = useCallback(async () => {
     setIsLoading(true);
@@ -78,9 +82,9 @@ const App: React.FC = () => {
       const prompt = await geminiService.enhancePrompt(currentParams, GEMINI_MODEL_NAME);
       setEnhancedPrompt(prompt);
     } catch (err) {
-      console.error("Error enhancing prompt:", err);
+      console.error('Error enhancing prompt:', err);
       if (err instanceof Error) {
-         // The GeminiService error messages are already translated or generic
+        // The GeminiService error messages are already translated or generic
         setError(err.message);
       } else {
         setError(t('error.generic'));
@@ -94,7 +98,6 @@ const App: React.FC = () => {
   React.useEffect(() => {
     document.title = t('app.title');
   }, [t]);
-
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center p-4 sm:p-6 md:p-8">
@@ -115,7 +118,6 @@ const App: React.FC = () => {
           isLoading={isLoading}
           selectedAiModel={selectedAiModelDetails}
           t={t}
-          uiLanguage={uiLanguage}
         />
         {isLoading && <LoadingSpinner t={t} />}
         {error && <ErrorMessage message={error} t={t} />}

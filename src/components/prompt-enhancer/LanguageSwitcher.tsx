@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LanguageOption } from '../../core/types';
 import { SelectInput } from '../ui/SelectInput';
@@ -19,7 +18,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   supportedLanguages,
   onUiLanguageChange,
   onPromptLanguageChange,
-  t
+  t,
 }) => {
   const languageOptions = supportedLanguages.map(lang => ({ value: lang.code, label: lang.name }));
 

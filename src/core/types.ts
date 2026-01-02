@@ -1,4 +1,3 @@
-
 export interface EnhancementParams {
   initialPrompt: string;
   targetAiModel: string;
@@ -7,9 +6,9 @@ export interface EnhancementParams {
   keywordsToAdd: string;
   negativePrompts: string;
   artisticMedium: string; // For image AIs
-  cameraAngle: string;    // For image AIs
-  lighting: string;       // For image AIs
-  colorPalette: string;   // For image AIs
+  cameraAngle: string; // For image AIs
+  lighting: string; // For image AIs
+  colorPalette: string; // For image AIs
   specificInstructions: string;
   promptLanguage: string; // New: Language for the generated prompt
 }

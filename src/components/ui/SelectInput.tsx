@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface Option {
@@ -23,7 +22,7 @@ export const SelectInput: React.FC<SelectInputProps> = ({
   onChange,
   options,
   required = false,
-  disabled = false
+  disabled = false,
 }) => {
   return (
     <div>
@@ -35,12 +34,12 @@ export const SelectInput: React.FC<SelectInputProps> = ({
         name={id}
         className="block w-full bg-slate-800 border-slate-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-slate-100 disabled:opacity-50"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         required={required}
         disabled={disabled}
         aria-label={typeof label === 'string' ? label : id}
       >
-        {options.map((option) => (
+        {options.map(option => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>

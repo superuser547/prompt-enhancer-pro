@@ -1,4 +1,3 @@
-
 import { AiModelOption, LanguageOption } from './types';
 
 export const AI_MODELS: AiModelOption[] = [
@@ -12,32 +11,94 @@ export const AI_MODELS: AiModelOption[] = [
 ];
 
 export const STYLES_TONES: string[] = [
-  'Default', 'Formal', 'Informal', 'Humorous', 'Serious', 'Optimistic', 'Pessimistic', 
-  'Poetic', 'Technical', 'Cinematic', 'Photorealistic', 'Artistic', 'Minimalist', 'Abstract'
+  'Default',
+  'Formal',
+  'Informal',
+  'Humorous',
+  'Serious',
+  'Optimistic',
+  'Pessimistic',
+  'Poetic',
+  'Technical',
+  'Cinematic',
+  'Photorealistic',
+  'Artistic',
+  'Minimalist',
+  'Abstract',
 ];
 
 export const DETAIL_LEVELS: string[] = [
-  'Default', 'Concise', 'Standard', 'Detailed', 'Very Detailed (Verbose)'
+  'Default',
+  'Concise',
+  'Standard',
+  'Detailed',
+  'Very Detailed (Verbose)',
 ];
 
 export const ARTISTIC_MEDIUMS: string[] = [
-  'Default', 'Oil Painting', 'Watercolor', 'Sketch', 'Pencil Drawing', 'Charcoal', 'Digital Painting', 
-  '3D Render', 'Pixel Art', 'Vector Art', 'Anime/Manga', 'Comic Book Style', 'Claymation', 'Origami'
+  'Default',
+  'Oil Painting',
+  'Watercolor',
+  'Sketch',
+  'Pencil Drawing',
+  'Charcoal',
+  'Digital Painting',
+  '3D Render',
+  'Pixel Art',
+  'Vector Art',
+  'Anime/Manga',
+  'Comic Book Style',
+  'Claymation',
+  'Origami',
 ];
 
 export const CAMERA_ANGLES: string[] = [
-  'Default', 'Eye-Level Shot', 'Low Angle', 'High Angle', 'Dutch Angle', 'Bird\'s-Eye View', 
-  'Worm\'s-Eye View', 'Close-Up', 'Extreme Close-Up', 'Medium Shot', 'Long Shot', 'Wide Shot', 'Over-the-Shoulder Shot'
+  'Default',
+  'Eye-Level Shot',
+  'Low Angle',
+  'High Angle',
+  'Dutch Angle',
+  "Bird's-Eye View",
+  "Worm's-Eye View",
+  'Close-Up',
+  'Extreme Close-Up',
+  'Medium Shot',
+  'Long Shot',
+  'Wide Shot',
+  'Over-the-Shoulder Shot',
 ];
 
 export const LIGHTING_OPTIONS: string[] = [
-  'Default', 'Natural Light', 'Studio Light', 'Soft Light', 'Hard Light', 'Rim Lighting', 'Backlighting', 
-  'Volumetric Lighting', 'Cinematic Lighting', 'Dramatic Lighting', 'Neon Glow', 'Golden Hour', 'Blue Hour', 'Moonlight'
+  'Default',
+  'Natural Light',
+  'Studio Light',
+  'Soft Light',
+  'Hard Light',
+  'Rim Lighting',
+  'Backlighting',
+  'Volumetric Lighting',
+  'Cinematic Lighting',
+  'Dramatic Lighting',
+  'Neon Glow',
+  'Golden Hour',
+  'Blue Hour',
+  'Moonlight',
 ];
 
 export const COLOR_PALETTES: string[] = [
-  'Default', 'Vibrant', 'Muted', 'Pastel', 'Monochrome', 'Grayscale', 'Sepia', 
-  'Warm Colors', 'Cool Colors', 'Analogous Colors', 'Complementary Colors', 'Triadic Colors', 'Neon'
+  'Default',
+  'Vibrant',
+  'Muted',
+  'Pastel',
+  'Monochrome',
+  'Grayscale',
+  'Sepia',
+  'Warm Colors',
+  'Cool Colors',
+  'Analogous Colors',
+  'Complementary Colors',
+  'Triadic Colors',
+  'Neon',
 ];
 
 export const GEMINI_MODEL_NAME = 'gemini-2.5-flash';

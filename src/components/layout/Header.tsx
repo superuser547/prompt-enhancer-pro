@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { TranslateFunction } from '../../utils/i18n';
 
@@ -12,9 +11,7 @@ export const Header: React.FC<HeaderProps> = ({ t }) => {
       <h1 className="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
         {t('header.title')}
       </h1>
-      <p className="mt-2 text-lg text-slate-300">
-        {t('header.subtitle')}
-      </p>
+      <p className="mt-2 text-lg text-slate-300">{t('header.subtitle')}</p>
     </header>
   );
 };
