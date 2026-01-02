@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+coverage
+*.log
+
+# Vite output
+.vite
+
+# env-файлы
+.env
+.env.*
