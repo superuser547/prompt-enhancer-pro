@@ -2,7 +2,7 @@
 import en from '../locales/en.ts';
 import ru from '../locales/ru.ts';
 import fr from '../locales/fr.ts';
-import { DEFAULT_UI_LANGUAGE } from '../constants';
+import { DEFAULT_UI_LANGUAGE } from '../core/constants';
 
 const translations: Record<string, Record<string, string>> = {
   en,

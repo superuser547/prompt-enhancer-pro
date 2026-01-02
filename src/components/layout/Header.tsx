@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TranslateFunction } from '../utils/i18n';
+import { TranslateFunction } from '../../utils/i18n';
 
 interface HeaderProps {
   t: TranslateFunction;

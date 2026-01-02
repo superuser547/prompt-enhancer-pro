@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback } from 'react';
-import { Button } from './Button';
-import { TranslateFunction } from '../utils/i18n';
+import { Button } from '../ui/Button';
+import { TranslateFunction } from '../../utils/i18n';
 
 interface EnhancedPromptDisplayProps {
   prompt: string;

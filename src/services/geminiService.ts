@@ -1,6 +1,6 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
-import { EnhancementParams } from '../types';
-import { AI_MODELS } from '../constants';
+import { EnhancementParams } from '../core/types';
+import { AI_MODELS } from '../core/constants';
 import { TranslateFunction } from "../utils/i18n";
 
 export class GeminiService {

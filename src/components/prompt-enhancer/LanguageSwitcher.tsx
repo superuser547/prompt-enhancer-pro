@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { LanguageOption } from '../types';
-import { SelectInput } from './SelectInput';
-import { TranslateFunction } from '../utils/i18n';
+import { LanguageOption } from '../../core/types';
+import { SelectInput } from '../ui/SelectInput';
+import { TranslateFunction } from '../../utils/i18n';
 
 interface LanguageSwitcherProps {
   uiLanguage: string;

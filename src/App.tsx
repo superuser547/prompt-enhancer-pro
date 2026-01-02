@@ -1,14 +1,23 @@
 
 import React, { useState, useCallback, useMemo } from 'react';
-import { EnhancementParams, AiModelOption } from './types';
-import { AI_MODELS, GEMINI_MODEL_NAME, SUPPORTED_LANGUAGES, DEFAULT_UI_LANGUAGE, DEFAULT_PROMPT_LANGUAGE } from './constants';
-import { Header } from './components/Header';
-import { PromptEnhancementForm } from './components/PromptEnhancementForm';
-import { EnhancedPromptDisplay } from './components/EnhancedPromptDisplay';
-import { LoadingSpinner } from './components/LoadingSpinner';
-import { ErrorMessage } from './components/ErrorMessage';
+import { EnhancementParams, AiModelOption } from './core/types';
+import {
+  AI_MODELS,
+  GEMINI_MODEL_NAME,
+  SUPPORTED_LANGUAGES,
+  DEFAULT_UI_LANGUAGE,
+  DEFAULT_PROMPT_LANGUAGE,
+} from './core/constants';
+
+import { Header } from './components/layout/Header';
+import { PromptEnhancementForm } from './components/prompt-enhancer/PromptEnhancementForm';
+import { EnhancedPromptDisplay } from './components/prompt-enhancer/EnhancedPromptDisplay';
+import { LanguageSwitcher } from './components/prompt-enhancer/LanguageSwitcher';
+
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
+import { ErrorMessage } from './components/ui/ErrorMessage';
+
 import { GeminiService } from './services/geminiService';
-import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { translate, TranslateFunction } from './utils/i18n';
 
 const App: React.FC = () => {

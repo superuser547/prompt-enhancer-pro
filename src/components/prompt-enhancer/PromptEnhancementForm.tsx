@@ -1,12 +1,14 @@
 
 import React from 'react';
-import { EnhancementParams, AiModelOption } from '../types';
-import { AI_MODELS, STYLES_TONES, DETAIL_LEVELS, ARTISTIC_MEDIUMS, CAMERA_ANGLES, LIGHTING_OPTIONS, COLOR_PALETTES } from '../constants';
-import { TextAreaInput } from './TextAreaInput';
-import { SelectInput } from './SelectInput';
-import { TextInput } from './TextInput';
-import { Button } from './Button';
-import { TranslateFunction } from '../utils/i18n';
+import { EnhancementParams, AiModelOption } from '../../core/types';
+import { AI_MODELS, STYLES_TONES, DETAIL_LEVELS, ARTISTIC_MEDIUMS, CAMERA_ANGLES, LIGHTING_OPTIONS, COLOR_PALETTES } from '../../core/constants';
+
+import { TextAreaInput } from '../ui/TextAreaInput';
+import { SelectInput } from '../ui/SelectInput';
+import { TextInput } from '../ui/TextInput';
+import { Button } from '../ui/Button';
+
+import { TranslateFunction } from '../../utils/i18n';
 
 interface PromptEnhancementFormProps {
   params: EnhancementParams;
