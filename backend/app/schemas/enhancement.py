@@ -2,10 +2,10 @@ from pydantic import BaseModel
 
 
 class EnhancementParams(BaseModel):
-    """
-    Pydantic-аналог фронтового интерфейса EnhancementParams (src/core/types.ts).
+    """Pydantic-аналог фронтового интерфейса EnhancementParams (src/core/types.ts).
 
-    Имена полей соответствуют JSON, который отправляет фронт.
+    Имена полей соответствуют JSON, который отправляет фронт, и намеренно сохранены в
+    camelCase, чтобы избежать лишних alias.
     """
 
     initialPrompt: str

@@ -7,7 +7,7 @@ app = FastAPI(
     version="0.1.0",
     description=(
         "Backend API for Prompt Enhancer Pro. "
-        "Currently provides a basic health-check endpoint and a stub for prompt enhancement."
+        "Provides a health-check endpoint and prompt enhancement via Gemini."
     ),
 )
 

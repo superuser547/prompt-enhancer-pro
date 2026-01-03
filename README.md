@@ -39,3 +39,28 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 После запуска backend будет доступен по адресу http://localhost:8000, health-check — по http://localhost:8000/health.
 
 > Адаптируйте под привычный способ создания виртуального окружения (venv/poetry/uv), но базовую инструкцию лучше оставить.
+
+### Настройки Gemini (Google Gen AI SDK)
+
+Backend использует Google Gen AI SDK (`google-genai`) для работы с Gemini API.
+
+Перед запуском убедитесь, что заданы переменные окружения:
+
+- `GEMINI_API_KEY` — API-ключ Gemini (обязательный для Developer API)
+- `GEMINI_MODEL_NAME` — идентификатор модели (по умолчанию `gemini-2.5-flash`)
+
+Установка зависимостей backend:
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Запуск backend:
+
+```bash
+export GEMINI_API_KEY="your_api_key_here"
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
