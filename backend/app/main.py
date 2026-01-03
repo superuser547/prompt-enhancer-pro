@@ -1,10 +1,12 @@
-from fastapi import FastAPI
+from pathlib import Path
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.api.routes.enhancement import router as enhancement_router
 from app.core.config import get_settings
-
-settings = get_settings()
 
 app = FastAPI(
     title="Prompt Enhancer Pro API",
@@ -14,6 +16,16 @@ app = FastAPI(
         "Provides a health-check endpoint and prompt enhancement via Gemini."
     ),
 )
+
+settings = get_settings()
+
+# Если dist существует, монтируем его как статические файлы.
+if settings.frontend_dist_path.is_dir():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(settings.frontend_dist_path), html=True),
+        name="frontend-static",
+    )
 
 app.add_middleware(
     CORSMiddleware,
@@ -38,3 +50,29 @@ async def health_check() -> dict:
 
 
 app.include_router(enhancement_router)
+
+if settings.frontend_dist_path.is_dir():
+    index_file: Path = settings.frontend_dist_path / "index.html"
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa_fallback(full_path: str, request: Request) -> FileResponse:
+        """
+        SPA fallback: для всех путей, которые не начинаются с /api или /health,
+        отдаём index.html, если он существует.
+
+        Это нужно, чтобы фронт на React/Vite мог сам разруливать маршрутизацию.
+        """
+        # Не перехватываем API и health-check
+        if request.url.path.startswith("/api/") or request.url.path == "/health":
+            # FastAPI сюда не должен попадать для существующих роутов,
+            # но на всякий случай вернём 404.
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=404, detail="Not Found")
+
+        if not index_file.is_file():
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=404, detail="Frontend is not built (index.html missing)")
+
+        return FileResponse(index_file)

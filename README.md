@@ -96,3 +96,38 @@ VITE_API_BASE_URL=http://localhost:8000
 > ```bash
 > export CORS_ALLOW_ORIGINS="http://localhost:4173,https://example.com"
 > ```
+
+## Продуктивный режим: backend отдаёт SPA
+
+В продакшене backend (FastAPI) может отдавать собранный фронтенд как статический SPA.
+
+1. Соберите фронтенд:
+
+```bash
+npm install
+npm run build
+```
+
+По умолчанию сборка попадает в каталог `dist/` в корне репозитория.
+
+2. Запустите backend:
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+export GEMINI_API_KEY="..."
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Backend:
+
+- отдаёт API по `/api/...`;
+- отдаёт health-check по `/health`;
+- отдаёт фронтенд (SPA) из каталога `dist` для всех остальных путей (`/`, `/settings`, и т.д.).
+
+При необходимости путь к каталогу `dist` можно переопределить:
+
+```bash
+export FRONTEND_DIST_PATH="/path/to/custom/dist"
+```
