@@ -19,14 +19,6 @@ app = FastAPI(
 
 settings = get_settings()
 
-# Если dist существует, монтируем его как статические файлы.
-if settings.frontend_dist_path.is_dir():
-    app.mount(
-        "/",
-        StaticFiles(directory=str(settings.frontend_dist_path), html=True),
-        name="frontend-static",
-    )
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_allow_origins,
@@ -51,7 +43,15 @@ async def health_check() -> dict:
 
 app.include_router(enhancement_router)
 
+# Если dist существует, монтируем его как статические файлы после всех API-роутов,
+# чтобы не перехватывать /api/* и системные эндпоинты.
 if settings.frontend_dist_path.is_dir():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(settings.frontend_dist_path), html=True),
+        name="frontend-static",
+    )
+
     index_file: Path = settings.frontend_dist_path / "index.html"
 
     @app.get("/{full_path:path}", include_in_schema=False)
