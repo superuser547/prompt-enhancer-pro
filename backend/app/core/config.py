@@ -28,7 +28,8 @@ class Settings:
         else:
             # Значение по умолчанию: ../dist относительно каталога backend/
             # То есть корень репо → dist/
-            self.frontend_dist_path = (Path(__file__).resolve().parents[2] / "dist").resolve()
+            # backend/app/core → backend/app → backend → <root>
+            self.frontend_dist_path = (Path(__file__).resolve().parents[3] / "dist").resolve()
 
         # Разрешённые CORS-источники для браузерных запросов к API.
         cors_origins_env = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173")

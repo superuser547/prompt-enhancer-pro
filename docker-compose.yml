@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    container_name: prompt-enhancer-pro
+    ports:
+      - "8000:8000"
+    environment:
+      # Обязательный ключ для доступа к Gemini
+      GEMINI_API_KEY: "${GEMINI_API_KEY}"
+      # Можно переопределить модель, если нужно
+      GEMINI_MODEL_NAME: "${GEMINI_MODEL_NAME:-gemini-2.5-flash}"
+      # Путь к dist внутри контейнера (совпадает с Dockerfile)
+      FRONTEND_DIST_PATH: "/app/dist"
+    restart: unless-stopped

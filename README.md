@@ -131,3 +131,41 @@ Backend:
 ```bash
 export FRONTEND_DIST_PATH="/path/to/custom/dist"
 ```
+
+## Запуск через Docker
+
+Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.
+
+### Сборка и запуск через docker-compose
+
+1. Установите переменную окружения с ключом Gemini:
+
+```bash
+export GEMINI_API_KEY="your_api_key_here"
+```
+
+2. Соберите и запустите контейнер:
+
+```bash
+docker-compose up --build
+```
+
+3. Откройте в браузере:
+
+- Приложение (SPA + API): http://localhost:8000
+- Health-check: http://localhost:8000/health
+- API endpoint: POST http://localhost:8000/api/v1/enhance
+
+### Ручной запуск через Docker
+
+Можно обойтись без docker-compose:
+
+```bash
+docker build -t prompt-enhancer-pro .
+docker run --rm -p 8000:8000 \
+  -e GEMINI_API_KEY="your_api_key_here" \
+  prompt-enhancer-pro
+```
+
+По умолчанию контейнер ожидает, что собранный frontend лежит в `/app/dist`
+(сборка происходит внутри Dockerfile на первой стадии).

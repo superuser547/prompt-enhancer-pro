@@ -1,0 +1,27 @@
+# Node / npm
+node_modules
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Vite output (можем пересобрать внутри контейнера)
+dist
+
+# Python venv
+venv
+.venv
+*.pyc
+__pycache__
+
+# Git
+.git
+.gitignore
+
+# IDE / редакторы
+.vscode
+.idea
+.DS_Store
+
+# Прочие локальные файлы
+.env
+.env.*
