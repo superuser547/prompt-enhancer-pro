@@ -13,4 +13,6 @@ services:
       GEMINI_MODEL_NAME: "${GEMINI_MODEL_NAME:-gemini-2.5-flash}"
       # Путь к dist внутри контейнера (совпадает с Dockerfile)
       FRONTEND_DIST_PATH: "/app/dist"
+      # Строка подключения к базе данных (PostgreSQL)
+      DATABASE_URL: "${DATABASE_URL}"
     restart: unless-stopped
