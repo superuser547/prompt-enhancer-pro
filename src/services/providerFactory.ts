@@ -1,5 +1,5 @@
 import { ProviderClient, ProviderId } from '../core/providers';
-import { GeminiService } from './geminiService';
+import { BackendProviderClient } from './backendProviderClient';
 import { TranslateFunction } from '../utils/i18n';
 
 /**
@@ -10,7 +10,8 @@ export function getProviderClient(providerId: ProviderId, t: TranslateFunction):
   switch (providerId) {
     case 'gemini':
     default:
-      // Пока всегда возвращаем клиент Gemini
-      return GeminiService.getInstance(t);
+      // Сейчас providerId по сути просто "тип логики",
+      // а конкретный AI-провайдер спрятан за backend'ом.
+      return new BackendProviderClient(t);
   }
 }

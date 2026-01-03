@@ -84,7 +84,7 @@ const App: React.FC = () => {
     } catch (err) {
       console.error('Error enhancing prompt:', err);
       if (err instanceof Error) {
-        // The GeminiService error messages are already translated or generic
+        // Provider client error messages are already translated or generic
         setError(err.message);
       } else {
         setError(t('error.generic'));
