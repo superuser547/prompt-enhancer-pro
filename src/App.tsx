@@ -2,7 +2,6 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { EnhancementParams } from './core/types';
 import {
   AI_MODELS,
-  GEMINI_MODEL_NAME,
   SUPPORTED_LANGUAGES,
   DEFAULT_UI_LANGUAGE,
   DEFAULT_PROMPT_LANGUAGE,
@@ -16,7 +15,8 @@ import { LanguageSwitcher } from './components/prompt-enhancer/LanguageSwitcher'
 import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import { ErrorMessage } from './components/ui/ErrorMessage';
 
-import { GeminiService } from './services/geminiService';
+import { ProviderClient } from './core/providers';
+import { getProviderClient } from './services/providerFactory';
 import { translate, TranslateFunction } from './utils/i18n';
 
 const App: React.FC = () => {
@@ -49,7 +49,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const geminiService = useMemo(() => GeminiService.getInstance(t), [t]);
+  const providerClient: ProviderClient = useMemo(() => getProviderClient('gemini', t), [t]);
 
   const handleFormChange = useCallback((newParams: Partial<EnhancementParams>) => {
     setEnhancementParams(prev => ({ ...prev, ...newParams }));
@@ -79,7 +79,7 @@ const App: React.FC = () => {
     const currentParams = { ...enhancementParams, promptLanguage };
 
     try {
-      const prompt = await geminiService.enhancePrompt(currentParams, GEMINI_MODEL_NAME);
+      const prompt = await providerClient.enhancePrompt(currentParams);
       setEnhancedPrompt(prompt);
     } catch (err) {
       console.error('Error enhancing prompt:', err);
@@ -92,7 +92,7 @@ const App: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [enhancementParams, geminiService, promptLanguage, t]);
+  }, [enhancementParams, providerClient, promptLanguage, t]);
 
   // Update document title with current UI language
   React.useEffect(() => {

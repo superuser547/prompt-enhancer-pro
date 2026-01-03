@@ -1,10 +1,11 @@
 import { GoogleGenAI, GenerateContentResponse } from '@google/genai';
 import { EnhancementParams } from '../core/types';
-import { AI_MODELS } from '../core/constants';
+import { AI_MODELS, GEMINI_MODEL_NAME } from '../core/constants';
 import { buildMetaPrompt } from '../core/promptEngine';
+import { ProviderClient } from '../core/providers';
 import { TranslateFunction } from '../utils/i18n';
 
-export class GeminiService {
+export class GeminiService implements ProviderClient {
   private static instance: GeminiService;
   private ai: GoogleGenAI;
   private t: TranslateFunction;
@@ -34,12 +35,13 @@ export class GeminiService {
     return GeminiService.instance;
   }
 
-  public async enhancePrompt(params: EnhancementParams, geminiModelName: string): Promise<string> {
+  public async enhancePrompt(params: EnhancementParams, geminiModelName?: string): Promise<string> {
     const metaPrompt = buildMetaPrompt(params);
+    const modelName = geminiModelName ?? GEMINI_MODEL_NAME;
 
     try {
       const response: GenerateContentResponse = await this.ai.models.generateContent({
-        model: geminiModelName,
+        model: modelName,
         contents: metaPrompt,
       });
 
