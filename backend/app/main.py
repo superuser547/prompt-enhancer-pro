@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 
+from app.api.routes.enhancement import router as enhancement_router
+
 app = FastAPI(
     title="Prompt Enhancer Pro API",
     version="0.1.0",
     description=(
         "Backend API for Prompt Enhancer Pro. "
-        "Currently provides a basic health-check endpoint."
+        "Currently provides a basic health-check endpoint and a stub for prompt enhancement."
     ),
 )
 
@@ -21,3 +23,6 @@ async def health_check() -> dict:
         "status": "ok",
         "service": "prompt-enhancer-pro-backend",
     }
+
+
+app.include_router(enhancement_router)
