@@ -132,6 +132,40 @@ Backend:
 export FRONTEND_DIST_PATH="/path/to/custom/dist"
 ```
 
+## База данных и миграции
+
+Backend использует PostgreSQL через SQLAlchemy и Alembic.
+
+### Переменные окружения
+
+Перед запуском backend'а необходимо указать строку подключения к БД:
+
+```bash
+export DATABASE_URL="postgresql+psycopg://app_user:app_password@localhost:5432/prompt_enhancer_pro"
+```
+
+Backend не стартует, если `DATABASE_URL` не задан.
+
+### Миграции Alembic
+
+Конфигурация Alembic расположена в каталоге backend/:
+
+- `backend/alembic.ini`
+- `backend/alembic/`
+  - `env.py`
+  - `versions/` (здесь будут храниться файлы миграций)
+
+Пример команд (из каталога `backend/`):
+
+```bash
+# проверить, что alembic видит конфиг
+alembic current
+
+# (в следующих шагах будут добавлены модели и автогенерация миграций)
+# alembic revision --autogenerate -m "init"
+# alembic upgrade head
+```
+
 ## Запуск через Docker
 
 Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.
