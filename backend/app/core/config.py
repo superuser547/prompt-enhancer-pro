@@ -26,10 +26,10 @@ class Settings:
         if dist_env:
             self.frontend_dist_path = Path(dist_env).resolve()
         else:
-            # Значение по умолчанию: ../dist относительно каталога backend/
-            # То есть корень репо → dist/
-            # backend/app/core → backend/app → backend → <root>
-            self.frontend_dist_path = (Path(__file__).resolve().parents[3] / "dist").resolve()
+            # Значение по умолчанию: dist/ в корне репозитория
+            # backend/app/core → backend/app → backend → <root> → dist
+            project_root = Path(__file__).resolve().parents[2].parent
+            self.frontend_dist_path = (project_root / "dist").resolve()
 
         # Разрешённые CORS-источники для браузерных запросов к API.
         cors_origins_env = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173")
