@@ -90,3 +90,9 @@ VITE_API_BASE_URL=http://localhost:8000
 - **URL:** `${VITE_API_BASE_URL}/api/v1/enhance`
 - **Тело запроса:** JSON, соответствующий `EnhancementParams` (см. `src/core/types.ts`)
 - **Ответ:** `{ "enhancedPrompt": "<string>" }`
+
+> Чтобы фронтенд мог обращаться к backend из браузера, необходимо разрешить CORS. По умолчанию backend разрешает `http://localhost:5173` (Vite dev server). Для другого домена или порта задайте переменную окружения `CORS_ALLOW_ORIGINS`, перечислив источники через запятую, например:
+>
+> ```bash
+> export CORS_ALLOW_ORIGINS="http://localhost:4173,https://example.com"
+> ```
