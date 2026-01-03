@@ -1,57 +1,17 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-
+from app.models_meta import ModelMeta
 from app.schemas.enhancement import EnhanceRequest
 
 
-@dataclass(frozen=True)
-class _AiModel:
-    value: str
-    label: str
-    is_image_model: bool = False
-
-
-_AI_MODELS: tuple[_AiModel, ...] = (
-    _AiModel(value="chatgpt-4", label="ChatGPT-4 / GPT-4o (Text)"),
-    _AiModel(value="claude-3-opus", label="Claude 3 Opus (Text)"),
-    _AiModel(value="gemini-advanced", label="Gemini Advanced (Text)"),
-    _AiModel(value="midjourney", label="Midjourney (Image)", is_image_model=True),
-    _AiModel(value="dall-e-3", label="DALL-E 3 (Image)", is_image_model=True),
-    _AiModel(
-        value="stable-diffusion-xl",
-        label="Stable Diffusion XL (Image)",
-        is_image_model=True,
-    ),
-    _AiModel(value="imagen-3", label="Imagen 3 (Image)", is_image_model=True),
-)
-
-
-def _find_model(value: str) -> _AiModel | None:
-    for model in _AI_MODELS:
-        if model.value == value:
-            return model
-    return None
-
-
-def get_model_label(value: str) -> str:
-    model = _find_model(value)
-    return model.label if model else value
-
-
-def is_image_model(value: str) -> bool:
-    model = _find_model(value)
-    return model.is_image_model if model else False
-
-
-def build_meta_prompt(params: EnhanceRequest) -> str:
+def build_meta_prompt(params: EnhanceRequest, model_meta: ModelMeta) -> str:
     """
     Python-аналог src/core/promptEngine.ts::buildMetaPrompt.
 
     Использует ту же структуру инструкций и параметры, что и фронт.
     """
-    target_model_name = get_model_label(params.targetAiModel)
-    image_model = is_image_model(params.targetAiModel)
+    target_model_name = model_meta.label or model_meta.id
+    image_model = model_meta.is_image_model
     output_language_name = params.promptLanguage.upper()
 
     meta_prompt = (

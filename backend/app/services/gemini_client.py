@@ -7,8 +7,9 @@ from fastapi import HTTPException, status
 from google import genai
 
 from app.core.config import get_settings
+from app.models_meta import ModelMeta, get_model_meta
 from app.schemas.enhancement import EnhanceRequest
-from app.services.prompt_engine import build_meta_prompt, get_model_label
+from app.services.prompt_engine import build_meta_prompt
 
 _client: Optional[genai.Client] = None
 
@@ -34,12 +35,12 @@ def _get_client() -> genai.Client:
     return _client
 
 
-def _clean_gemini_output(raw_text: str, params: EnhanceRequest) -> str:
+def _clean_gemini_output(raw_text: str, model_meta: ModelMeta) -> str:
     """
     Очистка ответа модели от типичных преамбул (перенос логики из фронтового GeminiService).
     """
     enhanced_prompt_text = raw_text.strip()
-    target_label = get_model_label(params.targetAiModel)
+    target_label = model_meta.label or model_meta.id
 
     common_preambles: List[str] = [
         f"enhanced prompt for {target_label}".lower(),
@@ -83,6 +84,22 @@ def enhance_prompt_with_gemini(params: EnhanceRequest) -> str:
     """
     settings = get_settings()
 
+    model_meta = get_model_meta(params.targetAiModel)
+    if model_meta is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported AI model: {params.targetAiModel}",
+        )
+
+    if model_meta.provider != "gemini":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=(
+                f"Model '{params.targetAiModel}' uses provider '{model_meta.provider}', "
+                "which is not supported by the backend yet."
+            ),
+        )
+
     if not (
         settings.gemini_api_key
         or os.getenv("GEMINI_API_KEY")
@@ -94,7 +111,7 @@ def enhance_prompt_with_gemini(params: EnhanceRequest) -> str:
         )
 
     client = _get_client()
-    meta_prompt = build_meta_prompt(params)
+    meta_prompt = build_meta_prompt(params, model_meta)
 
     try:
         response = client.models.generate_content(
@@ -121,4 +138,4 @@ def enhance_prompt_with_gemini(params: EnhanceRequest) -> str:
             detail="Gemini API returned empty response.",
         )
 
-    return _clean_gemini_output(raw_text, params)
+    return _clean_gemini_output(raw_text, model_meta)

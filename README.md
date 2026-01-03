@@ -64,3 +64,12 @@ pip install -r requirements.txt
 export GEMINI_API_KEY="your_api_key_here"
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
+
+### Реестр поддерживаемых моделей
+
+На backend есть реестр поддерживаемых моделей (`backend/app/models_meta.py`), который дублирует список моделей на фронте (`AI_MODELS` в `src/core/constants.ts`).
+
+Endpoint `/api/v1/enhance`:
+
+- вернёт HTTP 400, если указана модель, которой нет в реестре;
+- вернёт HTTP 400, если модель относится к провайдеру, который пока не поддерживается backend'ом.
