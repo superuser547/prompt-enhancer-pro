@@ -20,3 +20,22 @@
 3. Запустите приложение командой `npm run dev`
 
 После запуска откройте указанную в терминале ссылку в браузере и протестируйте работу Enhancer.
+
+## Backend (FastAPI)
+
+В репозитории есть простой backend на FastAPI (директория `backend/`), который позже будет использоваться для работы с AI-провайдерами, авторизацией, хранением истории и т.д.
+
+Локальный запуск backend:
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+После запуска backend будет доступен по адресу http://localhost:8000, health-check — по http://localhost:8000/health.
+
+> Адаптируйте под привычный способ создания виртуального окружения (venv/poetry/uv), но базовую инструкцию лучше оставить.
