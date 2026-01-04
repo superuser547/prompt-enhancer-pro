@@ -132,6 +132,67 @@ Backend:
 export FRONTEND_DIST_PATH="/path/to/custom/dist"
 ```
 
+## База данных и миграции
+
+Backend использует PostgreSQL через SQLAlchemy и Alembic.
+
+### Переменные окружения
+
+Перед запуском backend'а необходимо указать строку подключения к БД:
+
+```bash
+export DATABASE_URL="postgresql+psycopg://app_user:app_password@localhost:5432/prompt_enhancer_pro"
+```
+
+Backend не стартует, если `DATABASE_URL` не задан.
+
+### Миграции Alembic
+
+Конфигурация Alembic расположена в каталоге backend/:
+
+- `backend/alembic.ini`
+- `backend/alembic/`
+  - `env.py`
+  - `versions/` (здесь будут храниться файлы миграций)
+
+Пример команд (из каталога `backend/`):
+
+```bash
+# проверить, что alembic видит конфиг
+alembic current
+
+# (в следующих шагах будут добавлены модели и автогенерация миграций)
+# alembic revision --autogenerate -m "init"
+# alembic upgrade head
+```
+
+### Базовые таблицы
+
+Первая миграция (F2) создаёт две таблицы:
+
+- `users`:
+  - `id` (UUID, PK)
+  - `email` (уникальный, индексированный)
+  - `password_hash`
+  - `is_active`
+  - `created_at`, `updated_at`
+
+- `prompt_history`:
+  - `id` (UUID, PK)
+  - `user_id` (FK → users.id, NULL, on delete SET NULL)
+  - `model_id` (строка, идентификатор модели из реестра)
+  - `provider` (строка, провайдер модели)
+  - `input_prompt` (исходный промпт пользователя)
+  - `enhanced_prompt` (улучшенный промпт)
+  - `params_json` (JSON с параметрами улучшения)
+  - `created_at` (время создания записи)
+
+Индексы:
+- `users.email` (UNIQUE)
+- `prompt_history.user_id`
+- `prompt_history.created_at`
+- комбинированный индекс `ix_prompt_history_user_created_at (user_id, created_at DESC)`.
+
 ## Запуск через Docker
 
 Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.

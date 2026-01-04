@@ -11,6 +11,7 @@ class Settings:
     gemini_model_name: str
     frontend_dist_path: Path
     cors_allow_origins: List[str]
+    database_url: str
 
     def __init__(self) -> None:
         # Новый SDK умеет автоматически подхватывать ключ из GEMINI_API_KEY или GOOGLE_API_KEY,
@@ -30,6 +31,15 @@ class Settings:
             # backend/app/core → backend/app → backend → <root> → dist
             project_root = Path(__file__).resolve().parents[2].parent
             self.frontend_dist_path = (project_root / "dist").resolve()
+
+        db_url = os.getenv("DATABASE_URL")
+        if not db_url:
+            # Жёсткая проверка: без DATABASE_URL backend не стартует,
+            # чтобы мы не забыли настроить Postgres.
+            raise RuntimeError(
+                "DATABASE_URL is not set. Please configure PostgreSQL connection string."
+            )
+        self.database_url = db_url
 
         # Разрешённые CORS-источники для браузерных запросов к API.
         cors_origins_env = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173")
