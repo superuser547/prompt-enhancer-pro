@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.api.routes.auth import router as auth_router
 from app.api.routes.enhancement import router as enhancement_router
 from app.core.config import get_settings
 
@@ -42,6 +43,7 @@ async def health_check() -> dict:
 
 
 app.include_router(enhancement_router)
+app.include_router(auth_router)
 
 # Если dist существует, монтируем его как статические файлы после всех API-роутов,
 # чтобы не перехватывать /api/* и системные эндпоинты.

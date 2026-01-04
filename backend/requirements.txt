@@ -4,3 +4,5 @@ google-genai>=1.0.0,<2.0.0
 SQLAlchemy==2.0.34
 psycopg[binary]==3.2.1
 alembic==1.13.2
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0

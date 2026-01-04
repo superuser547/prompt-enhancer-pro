@@ -193,6 +193,21 @@ alembic current
 - `prompt_history.created_at`
 - комбинированный индекс `ix_prompt_history_user_created_at (user_id, created_at DESC)`.
 
+### Авторизация и аутентификация
+
+Backend поддерживает простую авторизацию по e-mail и паролю с использованием JWT access-токенов.
+
+Переменные окружения:
+
+- `AUTH_SECRET_KEY` — секрет для подписи JWT (обязательно переопределить в проде).
+- `AUTH_ACCESS_TOKEN_EXPIRE_MINUTES` — время жизни access-токена в минутах (по умолчанию 60).
+
+Эндпоинты:
+
+- `POST /api/v1/auth/register` — регистрация нового пользователя.
+- `POST /api/v1/auth/login` — получение access-токена (формат `application/x-www-form-urlencoded`, поля `username` и `password`).
+- `GET /api/v1/auth/me` — данные текущего пользователя (требуется `Authorization: Bearer <token>`).
+
 ## Запуск через Docker
 
 Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.
