@@ -166,6 +166,33 @@ alembic current
 # alembic upgrade head
 ```
 
+### Базовые таблицы
+
+Первая миграция (F2) создаёт две таблицы:
+
+- `users`:
+  - `id` (UUID, PK)
+  - `email` (уникальный, индексированный)
+  - `password_hash`
+  - `is_active`
+  - `created_at`, `updated_at`
+
+- `prompt_history`:
+  - `id` (UUID, PK)
+  - `user_id` (FK → users.id, NULL, on delete SET NULL)
+  - `model_id` (строка, идентификатор модели из реестра)
+  - `provider` (строка, провайдер модели)
+  - `input_prompt` (исходный промпт пользователя)
+  - `enhanced_prompt` (улучшенный промпт)
+  - `params_json` (JSON с параметрами улучшения)
+  - `created_at` (время создания записи)
+
+Индексы:
+- `users.email` (UNIQUE)
+- `prompt_history.user_id`
+- `prompt_history.created_at`
+- комбинированный индекс `ix_prompt_history_user_created_at (user_id, created_at DESC)`.
+
 ## Запуск через Docker
 
 Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.
