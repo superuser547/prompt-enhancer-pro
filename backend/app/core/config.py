@@ -12,6 +12,8 @@ class Settings:
     frontend_dist_path: Path
     cors_allow_origins: List[str]
     database_url: str
+    auth_secret_key: str
+    auth_access_token_expire_minutes: int
 
     def __init__(self) -> None:
         # Новый SDK умеет автоматически подхватывать ключ из GEMINI_API_KEY или GOOGLE_API_KEY,
@@ -40,6 +42,14 @@ class Settings:
                 "DATABASE_URL is not set. Please configure PostgreSQL connection string."
             )
         self.database_url = db_url
+
+        # Секрет для подписи JWT. В проде ОБЯЗАТЕЛЬНО переопределить через env.
+        self.auth_secret_key = os.getenv("AUTH_SECRET_KEY", "CHANGE_ME_IN_PRODUCTION")
+
+        # Время жизни access-токена в минутах (по умолчанию 60).
+        self.auth_access_token_expire_minutes = int(
+            os.getenv("AUTH_ACCESS_TOKEN_EXPIRE_MINUTES", "60")
+        )
 
         # Разрешённые CORS-источники для браузерных запросов к API.
         cors_origins_env = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173")

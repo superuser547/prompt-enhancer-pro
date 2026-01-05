@@ -12,3 +12,4 @@ class Base(DeclarativeBase):
 # и мог autogenerate миграции.
 from app.models.user import User  # noqa: F401
 from app.models.prompt_history import PromptHistory  # noqa: F401
+from app.models.password_reset_token import PasswordResetToken  # noqa: F401
