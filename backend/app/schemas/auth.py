@@ -35,3 +35,12 @@ class Token(BaseModel):
 class TokenPayload(BaseModel):
     sub: str
     exp: int
+
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr = Field(..., description="E-mail пользователя, который хочет сбросить пароль")
+
+
+class PasswordResetConfirm(BaseModel):
+    token: str = Field(..., description="Токен сброса пароля из письма/ссылки")
+    new_password: str = Field(..., min_length=8, max_length=128, description="Новый пароль пользователя")

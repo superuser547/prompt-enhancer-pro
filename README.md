@@ -208,6 +208,23 @@ Backend поддерживает простую авторизацию по e-ma
 - `POST /api/v1/auth/login` — получение access-токена (формат `application/x-www-form-urlencoded`, поля `username` и `password`).
 - `GET /api/v1/auth/me` — данные текущего пользователя (требуется `Authorization: Bearer <token>`).
 
+### Сброс пароля
+
+Backend поддерживает сброс пароля по e-mail через токен.
+
+Эндпоинты:
+
+- `POST /api/v1/auth/request-password-reset`
+  - Тело: `{ "email": "user@example.com" }`
+  - Если пользователь существует, создаётся токен сброса.
+  - В текущей реализации ссылка для сброса **логируется в backend-логи** (отправка e-mail будет реализована позже).
+  - Всегда возвращает одинаковое сообщение, чтобы не раскрывать, есть ли пользователь.
+
+- `POST /api/v1/auth/reset-password`
+  - Тело: `{ "token": "<token>", "new_password": "NewStrongPassword123" }`
+  - Если токен действителен и не использован, пароль пользователя обновляется, токен помечается использованным.
+  - В случае недействительного токена возвращает HTTP 400 с сообщением `"Invalid or expired password reset token"`.
+
 ## Запуск через Docker
 
 Проект можно запускать в Docker-контейнере, где backend (FastAPI) и собранный frontend (Vite SPA) живут вместе.
